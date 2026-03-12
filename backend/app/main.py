@@ -38,7 +38,16 @@ app.add_middleware(
 app.include_router(upload_router,     prefix="/api/upload",         tags=["Upload"])
 app.include_router(dashboard_router,  prefix="/api/dashboard",      tags=["Dashboard"])
 app.include_router(data_router,       prefix="/api/data",           tags=["Data Viewer"])
+
 app.include_router(student_router,    prefix="/api/student",        tags=["Student Detail"])
 app.include_router(viz_router,        prefix="/api/visualizations", tags=["Visualizations"])
 app.include_router(comparison_router, prefix="/api",                tags=["Comparison"])
+
+# ─── Health Route ────────────────────────────────────────────────────────────
+from fastapi.responses import Response
+
+@app.get("/api/health", tags=["Health"])
+@app.head("/api/health", tags=["Health"])
+def health():
+  return Response(status_code=200)
 
