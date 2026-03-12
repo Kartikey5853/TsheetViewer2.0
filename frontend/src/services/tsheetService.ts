@@ -211,7 +211,7 @@ export const tsheetService = {
     const formData = new FormData();
     formData.append("file", file);
 
-    const { data } = await apiClient.post<UploadResponse>("/current/upload", formData, {
+    const { data } = await apiClient.post<UploadResponse>("/upload/current", formData, {
       headers: { "Content-Type": "multipart/form-data" },
     });
     return data;
@@ -221,7 +221,7 @@ export const tsheetService = {
     const formData = new FormData();
     formData.append("file", file);
 
-    const { data } = await apiClient.post<UploadResponse>("/previous/upload", formData, {
+    const { data } = await apiClient.post<UploadResponse>("/upload/previous", formData, {
       headers: { "Content-Type": "multipart/form-data" },
     });
     return data;
