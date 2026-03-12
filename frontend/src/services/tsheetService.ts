@@ -228,17 +228,17 @@ export const tsheetService = {
   },
 
   async getDashboard(): Promise<DashboardResponse> {
-    const { data } = await apiClient.get<Record<string, unknown>>("/dashboard");
+    const { data } = await apiClient.get<Record<string, unknown>>("/api/dashboard");
     return mapDashboard(data);
   },
 
   async getVisualizations(): Promise<VisualizationsResponse> {
-    const { data } = await apiClient.get<Record<string, unknown>>("/visualizations");
+    const { data } = await apiClient.get<Record<string, unknown>>("/api/visualizations");
     return mapVisualization(data);
   },
 
   async getStudents(): Promise<StudentSummary[]> {
-    const { data } = await apiClient.get<unknown>("/data");
+    const { data } = await apiClient.get<unknown>("/api/data");
     const rows = Array.isArray(data)
       ? data
       : Array.isArray((data as Record<string, unknown>).students)
@@ -249,7 +249,7 @@ export const tsheetService = {
   },
 
   async getStudentByRoll(rollNo: string): Promise<StudentDetailResponse> {
-    const { data } = await apiClient.get<Record<string, unknown>>(`/student/${rollNo}`);
+    const { data } = await apiClient.get<Record<string, unknown>>(`/api/student/${rollNo}`);
     const subjectsRaw = Array.isArray(data.subjects) ? data.subjects : [];
     const previousRaw = (data.previous ?? null) as Record<string, unknown> | null;
     const previousSubjects = previousRaw && Array.isArray(previousRaw.subjects) ? previousRaw.subjects : [];
@@ -274,29 +274,29 @@ export const tsheetService = {
   },
 
   async getGradeDrilldown(grade: string): Promise<DrilldownResponse> {
-    const { data } = await apiClient.get<Record<string, unknown>>(`/visualizations/grade/${encodeURIComponent(grade)}`);
+    const { data } = await apiClient.get<Record<string, unknown>>(`/api/visualizations/grade/${encodeURIComponent(grade)}`);
     return mapDrilldown(data, `Students with Grade ${grade.toUpperCase()}`);
   },
 
   async getSgpaBucketDrilldown(bucket: string): Promise<DrilldownResponse> {
-    const { data } = await apiClient.get<Record<string, unknown>>(`/visualizations/sgpa/${encodeURIComponent(bucket)}`);
+    const { data } = await apiClient.get<Record<string, unknown>>(`/api/visualizations/sgpa/${encodeURIComponent(bucket)}`);
     return mapDrilldown(data, `Students in SGPA Bucket ${bucket}`);
   },
 
   async getSubjectDrilldown(subject: string): Promise<DrilldownResponse> {
-    const { data } = await apiClient.get<Record<string, unknown>>(`/visualizations/subject/${encodeURIComponent(subject)}`);
+    const { data } = await apiClient.get<Record<string, unknown>>(`/api/visualizations/subject/${encodeURIComponent(subject)}`);
     return mapDrilldown(data, `Students in ${subject}`);
   },
 
   async getSubjectStatusDrilldown(subject: string, status: string): Promise<DrilldownResponse> {
     const { data } = await apiClient.get<Record<string, unknown>>(
-      `/visualizations/subject/${encodeURIComponent(subject)}/${encodeURIComponent(status)}`,
+      `/api/visualizations/subject/${encodeURIComponent(subject)}/${encodeURIComponent(status)}`,
     );
     return mapDrilldown(data, `${status.toUpperCase()} in ${subject}`);
   },
 
   async getComparison(): Promise<ComparisonResponse> {
-    const { data } = await apiClient.get<Record<string, unknown>>("/comparison");
+    const { data } = await apiClient.get<Record<string, unknown>>("/api/comparison");
     return mapComparison(data);
   },
 };
